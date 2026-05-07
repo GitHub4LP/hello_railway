@@ -14,16 +14,15 @@ echo "[Railway] TCP Port: $RAILWAY_TCP_PROXY_PORT"
 
 # 生成 REALITY 密钥
 echo "[Railway] Generating REALITY keys..."
-KEY_OUTPUT=$(/usr/local/bin/xray x25519)
-PRIVATE_KEY=$(echo "$KEY_OUTPUT" | grep "Private key:" | awk '{print $3}')
-PUBLIC_KEY=$(echo "$KEY_OUTPUT" | grep "Public key:" | awk '{print $3}')
+/usr/local/bin/xray x25519 > /tmp/keys
+PRIVATE_KEY=$(grep "PrivateKey:" /tmp/keys | cut -d' ' -f2)
+PUBLIC_KEY=$(grep "PublicKey" /tmp/keys | cut -d' ' -f3)
 
 echo "[Railway] Private key: $PRIVATE_KEY"
 echo "[Railway] Public key: $PUBLIC_KEY"
 
 # 保存公钥供 API 使用
 echo "$PUBLIC_KEY" > /tmp/reality_public_key
-chmod 644 /tmp/reality_public_key
 
 # 生成 xray 配置
 cat > /tmp/xray.json <<EOF
