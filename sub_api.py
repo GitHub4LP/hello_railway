@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # 读取配置
 UUID = os.environ.get('UUID', '00000000-0000-0000-0000-000000000000')
-SNI = os.environ.get('SNI', 'modal.com')
+SNI = os.environ.get('SNI', 'railway.com')
 HTTP_DOMAIN = os.environ.get('RAILWAY_PUBLIC_DOMAIN', 'localhost')
 TCP_DOMAIN = os.environ.get('RAILWAY_TCP_PROXY_DOMAIN')
 TCP_PORT = os.environ.get('RAILWAY_TCP_PROXY_PORT')

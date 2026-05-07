@@ -23,7 +23,7 @@ railway init
 
 ```bash
 UUID=your-uuid-here  # 可选，默认全零
-SNI=modal.com        # 可选，REALITY SNI 域名
+SNI=railway.com      # 可选，REALITY SNI 域名，默认 railway.com
 ```
 
 ### 3. 配置 TCP Proxy
@@ -64,7 +64,7 @@ https://your-app.railway.app/sub
 | 变量 | 说明 | 默认值 |
 |------|------|--------|
 | `UUID` | 用户 UUID | `00000000-0000-0000-0000-000000000000` |
-| `SNI` | REALITY SNI 域名 | `modal.com` |
+| `SNI` | REALITY SNI 域名 | `railway.com` |
 | `RAILWAY_PUBLIC_DOMAIN` | HTTP 域名（自动） | - |
 | `RAILWAY_TCP_PROXY_DOMAIN` | TCP 域名（自动） | - |
 | `RAILWAY_TCP_PROXY_PORT` | TCP 端口（自动） | - |

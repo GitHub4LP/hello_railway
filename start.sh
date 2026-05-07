@@ -3,7 +3,7 @@ set -e
 
 # 读取环境变量
 UUID=${UUID:-00000000-0000-0000-0000-000000000000}
-SNI=${SNI:-modal.com}
+SNI=${SNI:-railway.com}
 
 echo "[Railway] Starting Vless service..."
 echo "[Railway] UUID: $UUID"
