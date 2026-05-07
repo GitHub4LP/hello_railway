@@ -14,14 +14,16 @@ echo "[Railway] TCP Port: $RAILWAY_TCP_PROXY_PORT"
 
 # 生成 REALITY 密钥
 echo "[Railway] Generating REALITY keys..."
-PRIVATE_KEY=$(/usr/local/bin/xray x25519 | grep "Private key:" | awk '{print $3}')
-PUBLIC_KEY=$(/usr/local/bin/xray x25519 -i "$PRIVATE_KEY" | grep "Public key:" | awk '{print $3}')
+KEY_OUTPUT=$(/usr/local/bin/xray x25519)
+PRIVATE_KEY=$(echo "$KEY_OUTPUT" | grep "Private key:" | awk '{print $3}')
+PUBLIC_KEY=$(echo "$KEY_OUTPUT" | grep "Public key:" | awk '{print $3}')
 
 echo "[Railway] Private key: $PRIVATE_KEY"
 echo "[Railway] Public key: $PUBLIC_KEY"
 
 # 保存公钥供 API 使用
 echo "$PUBLIC_KEY" > /tmp/reality_public_key
+chmod 644 /tmp/reality_public_key
 
 # 生成 xray 配置
 cat > /tmp/xray.json <<EOF
@@ -81,9 +83,15 @@ echo "[Railway] Starting services..."
 
 # 启动 xray
 /usr/local/bin/xray run -c /tmp/xray.json &
+XRAY_PID=$!
+sleep 2
 
 # 启动订阅 API
 python3 /sub_api.py &
+API_PID=$!
+sleep 1
+
+echo "[Railway] Services started (xray: $XRAY_PID, api: $API_PID)"
 
 # 启动 nginx（前台运行）
 exec /usr/sbin/nginx -c /etc/nginx/nginx.conf

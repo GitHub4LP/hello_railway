@@ -25,6 +25,12 @@ def subscription():
     """返回订阅链接"""
     links = []
     
+    # 调试信息
+    print(f"[API] HTTP_DOMAIN: {HTTP_DOMAIN}")
+    print(f"[API] TCP_DOMAIN: {TCP_DOMAIN}")
+    print(f"[API] TCP_PORT: {TCP_PORT}")
+    print(f"[API] PUBLIC_KEY exists: {PUBLIC_KEY is not None}")
+    
     # WS 链接
     ws_link = f"vless://{UUID}@{HTTP_DOMAIN}:443?type=ws&path=/ws&security=tls#{HTTP_DOMAIN}-WS"
     links.append(ws_link)
@@ -37,6 +43,9 @@ def subscription():
     if TCP_DOMAIN and TCP_PORT and PUBLIC_KEY:
         reality_link = f"vless://{UUID}@{TCP_DOMAIN}:{TCP_PORT}?type=tcp&security=reality&pbk={PUBLIC_KEY}&sni={SNI}&sid=&flow=xtls-rprx-vision&encryption=none#{TCP_DOMAIN}-REALITY"
         links.append(reality_link)
+        print(f"[API] REALITY link added")
+    else:
+        print(f"[API] REALITY link skipped (TCP_DOMAIN={TCP_DOMAIN}, TCP_PORT={TCP_PORT}, PUBLIC_KEY={PUBLIC_KEY is not None})")
     
     # 返回订阅
     content = '\n'.join(links) + '\n'
